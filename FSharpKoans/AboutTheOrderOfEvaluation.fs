@@ -1,4 +1,5 @@
 ﻿namespace FSharpKoans
+
 open FSharpKoans.Core
 
 //---------------------------------------------------------------
@@ -12,24 +13,21 @@ open FSharpKoans.Core
 module ``about the order of evaluation`` =
 
     [<Koan>]
-    let SometimesYouNeedParenthesisToGroupThings() =
-        let add x y =
-            x + y
+    let SometimesYouNeedParenthesisToGroupThings () =
+        let add x y = x + y
 
         let result = add (add 5 8) (add 1 1)
 
-        AssertEquality result __
+        AssertEquality result 15
 
-        (* TRY IT: What happens if you remove the parenthesis?*)
+    (* TRY IT: What happens if you remove the parenthesis?*)
 
     [<Koan>]
-    let TheBackwardPipeOperatorCanAlsoHelpWithGrouping() =
-        let add x y =
-            x + y
+    let TheBackwardPipeOperatorCanAlsoHelpWithGrouping () =
+        let add x y = x + y
 
-        let double x =
-            x * 2
+        let double x = x * 2
 
         let result = double <| add 5 8
 
-        AssertEquality result __
+        AssertEquality result 26
