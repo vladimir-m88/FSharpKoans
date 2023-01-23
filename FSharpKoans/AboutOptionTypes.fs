@@ -1,11 +1,11 @@
 ﻿namespace FSharpKoans
+
 open FSharpKoans.Core
 
-type Game = {
-    Name: string
-    Platform: string
-    Score: int option
-}
+type Game =
+    { Name: string
+      Platform: string
+      Score: int option }
 
 //---------------------------------------------------------------
 // About Option Types
@@ -19,25 +19,32 @@ type Game = {
 module ``about option types`` =
 
     [<Koan>]
-    let OptionTypesMightContainAValue() =
+    let OptionTypesMightContainAValue () =
         let someValue = Some 10
-        
-        AssertEquality someValue.IsSome __
-        AssertEquality someValue.IsNone __
-        AssertEquality someValue.Value __
+
+        AssertEquality someValue.IsSome true
+        AssertEquality someValue.IsNone false
+        AssertEquality someValue.Value 10
 
     [<Koan>]
-    let OrTheyMightNot() =
+    let OrTheyMightNot () =
         let noValue = None
 
-        AssertEquality noValue.IsSome __
-        AssertEquality noValue.IsNone __
-        AssertThrows<FILL_IN_THE_EXCEPTION> (fun () -> noValue.Value)
+        AssertEquality noValue.IsSome false
+        AssertEquality noValue.IsNone true
+        AssertThrows<System.NullReferenceException>(fun () -> noValue.Value)
 
     [<Koan>]
-    let UsingOptionTypesWithPatternMatching() =
-        let chronoTrigger = { Name = "Chrono Trigger"; Platform = "SNES"; Score = Some 5 }
-        let halo = { Name = "Halo"; Platform = "Xbox"; Score = None }
+    let UsingOptionTypesWithPatternMatching () =
+        let chronoTrigger =
+            { Name = "Chrono Trigger"
+              Platform = "SNES"
+              Score = Some 5 }
+
+        let halo =
+            { Name = "Halo"
+              Platform = "Xbox"
+              Score = None }
 
         let translate score =
             match score with
@@ -53,19 +60,30 @@ module ``about option types`` =
             | Some score -> translate score
             | None -> "Unknown"
 
-        AssertEquality (getScore chronoTrigger) __
-        AssertEquality (getScore halo) __
+        AssertEquality(getScore chronoTrigger) "Great"
+        AssertEquality(getScore halo) "Unknown"
 
     [<Koan>]
-    let ProjectingValuesFromOptionTypes() =
-        let chronoTrigger = { Name = "Chrono Trigger"; Platform = "SNES"; Score = Some 5 }
-        let halo = { Name = "Halo"; Platform = "Xbox"; Score = None }
+    let ProjectingValuesFromOptionTypes () =
+        let chronoTrigger =
+            { Name = "Chrono Trigger"
+              Platform = "SNES"
+              Score = Some 5 }
+
+        let halo =
+            { Name = "Halo"
+              Platform = "Xbox"
+              Score = None }
 
         let decideOn game =
 
             game.Score
-            |> Option.map (fun score -> if score > 3 then "play it" else "don't play")
+            |> Option.map (fun score ->
+                if score > 3 then
+                    "play it"
+                else
+                    "don't play")
 
         //HINT: look at the return type of the decideOn function
-        AssertEquality (decideOn chronoTrigger) __
-        AssertEquality (decideOn halo) __
+        AssertEquality(decideOn chronoTrigger) (Some "play it")
+        AssertEquality(decideOn halo) None
